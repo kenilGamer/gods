@@ -1,0 +1,23 @@
+<% include ./partials/header.ejs %>
+<div class="w-full h-screen  flex items-center justify-center  bg-[url('/images/wws.png')] bg-center bg-clip-content bg-cover">
+  <div class="w-80 h-[70vh]  bg-zinc-100 px-4 py-5 text-center rounded-md shadow-lg shadow-slate-100">
+    <img src="/images/logo.png" class="h-16 w-16 object-cover rounded-full"alt="" width="50" style=" margin: 0 110px;">
+    <h5 class="font-semibold">Welcome TO Godcraft</h5>
+
+    <% if(error.length > 0) {%>
+      <p  style="color: red;"><%= error %></p>
+      <% } %>
+      
+    <form action="/login" method="post">
+      <input class="block mt-6 w-full px-3 py-2" type="text" name="username" placeholder="username">
+      <input class="block mt-6 w-full px-3 py-2" type="password" name="password" placeholder="password">
+      <a href="#" class="mt-4 inline-block font-semibold text-red-300">Forgot password?</a>
+
+      <input class="block mt-7 w-full px-3 py-2 bg-red-400 text-white rounded-full transition-all shadow shadow-black" type="submit" value="login">
+      <div class="mt-1">or</div>
+      <a href="/signup" class="block mt-1 w-full px-3 py-2 bg-blue-500 text-white rounded-full transition-all shadow shadow-black">signup</a>
+    </form>
+    
+  </div>
+</div>
+<% include ./partials/footer.ejs %>
