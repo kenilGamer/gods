@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo&family=Bebas+Neue&family=Nova+Square&family=Poppins:wght@500&family=Smooch&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Arvo', serif;
+    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Nova Square', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Smooch', cursive; */
 }
 html , body{
     height: 100%;

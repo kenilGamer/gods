@@ -1,2 +1,29 @@
 </body>
+<script>
+  function dropdown() {
+    let nav = document.getElementById("navbar-default");
+    let menu = document.getElementById("menu");
+    let x = 0;
+
+    if (window.innerWidth >= 767) {
+      nav.style.display = "block";
+    } else {
+      nav.style.display = "none";
+    }
+
+    menu.addEventListener("click", () => {
+      if (x) {
+        nav.style.display = "none";
+        x = 0;
+      } else {
+        nav.style.display = "block";
+        x = 1;
+      }
+    });
+  }
+
+  dropdown();
+  window.addEventListener('resize', dropdown);
+
+</script>
 </html>
