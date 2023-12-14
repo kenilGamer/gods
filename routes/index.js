@@ -20,11 +20,27 @@ router.get('/signup', function(req, res, next) {
 router.post('/file', isLoggedIn,upload.single("image"), async function(req, res, next) {
 const user = await userModel.findOne({username: req.session.passport.user});
 user.profileimage = req.file.filename; 
+// user.email = req.body.email;
 await user.save();
 res.redirect("profile")
 // console.log(user);
 });
+router.post('/files', isLoggedIn,upload.single("image"), async function(req, res, next) {
+  const user = await userModel.findOne({username: req.session.passport.user});
+  user.profileimage = req.file.filename; 
+  user.email = req.body.email;
+  user.fullname = req.body.fullname;
+  user.username = req.body.username;
+  await user.save();
+  res.redirect("profile")
+  // console.log(user);
+  });
+  router.get('/files', isLoggedIn, async function(req, res, next) {
+    const user = await 
+    userModel.findOne({username: req.session.passport.user})
 
+    res.render("files",{user, nav: true})
+  });
 router.get('/profile',isLoggedIn, async function(req, res, next) {
   const user = await 
   userModel.findOne({username: req.session.passport.user})
@@ -103,4 +119,6 @@ router.post("/signup", function(req,res){
     if(req.isAuthenticated()) return next();
     res.redirect("/");
   }
+
+
 module.exports = router;
