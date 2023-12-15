@@ -1,6 +1,6 @@
 const pls = require("passport-local-mongoose")
 const mongoose = require("mongoose")
-mongoose.connect("mongodb+srv://kenil3035:Ph9EXAdayk4BsYdy@cluster0.v7hif44.mongodb.net/gods")
+mongoose.connect(process.env['mongoose'])
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
