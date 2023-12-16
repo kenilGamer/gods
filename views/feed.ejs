@@ -3,7 +3,7 @@
         <div class="cards flex flex-wrap gap-10 ">
             <% posts.forEach(function(elem){ %>
                 <div class="card w-38">
-                    <h2 class="mt-2 text-sm mx-20">@<%= elem.user.username %></h2>
+                    <h2 class="mt-2 text-sm" style="text-align: center;">@<%= elem.user.username %></h2>
                     <div class=" w-full h-44 bg-zinc-500 rounded-lg overflow-hidden">
                         <img src="/images/uploads/<%= elem.image %>" class="w-full h-full object-cover" alt="">
                     </div>
