@@ -89,9 +89,9 @@ const post = await  postModel.create({
     image: req.file.filename, 
     imageText: req.body.filecaption,
     title: req.body.title,
-    user: user._id
+    user: user._id,
   })
-
+  
 user.posts.push(post._id)
  await user.save()
   res.redirect('profile')
@@ -105,11 +105,10 @@ router.post("/signup", function(req,res){
   .then(function(){
     passport.authenticate("local")(req, res, function(){
       res.redirect("profile")
-    })
-    
+    }) 
   })
+});
 
-  });
   router.post("/login", passport.authenticate("local", {
     successRedirect:"/profile",
     failureRedirect: "/",
