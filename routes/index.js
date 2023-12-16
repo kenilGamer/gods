@@ -25,16 +25,34 @@ await user.save();
 res.redirect("profile")
 // console.log(user);
 });
-router.post('/files', isLoggedIn,upload.single("image"), async function(req, res, next) {
+router.post('/edit', isLoggedIn,upload.single("image"), async function(req, res, next) {
   const user = await userModel.findOne({username: req.session.passport.user});
-  user.profileimage = req.file.filename; 
+  // user.profileimage = req.file.filename; 
   user.email = req.body.email;
   user.fullname = req.body.fullname;
   user.username = req.body.username;
   await user.save();
   res.redirect("profile")
   // console.log(user);
-  });
+  }); 
+  router.post('/password', isLoggedIn,upload.single("image"), async function(req, res, next) {
+    const user = await userModel.findOne({username: req.session.passport.user});
+    const token = req.params.token;
+  const password = req.body.password;
+  const confirm_password = req.body.confirm_password;
+ 
+  // Check if passwords match
+  if (password !== confirm_password) {
+    res.render('reset', { token, message: 'Passwords do not match' });
+    return;
+  }
+ 
+  res.send('Password reset successful');
+    // user.hash = req.body.hash;
+    await user.save();
+    res.redirect("profile")
+    console.log(user);
+    }); 
   router.get('/files', isLoggedIn, async function(req, res, next) {
     const user = await 
     userModel.findOne({username: req.session.passport.user})
