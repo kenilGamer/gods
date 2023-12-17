@@ -6,6 +6,8 @@ const postModel = require("./post");
 const passport = require('passport');
 const localStrategy = require("passport-local")
 const upload = require("./multer")
+const sendEmail = require("./email")
+const jwt = require("jsonwebtoken")
 passport.use(new localStrategy(userModel.authenticate()));
  
 /* GET home page. */
@@ -35,17 +37,10 @@ router.post('/edit', isLoggedIn,upload.single("image"), async function(req, res,
   res.redirect("profile")
   // console.log(user);
   }); 
-  // router.post('/password', isLoggedIn,upload.single("image"), async function(req, res, next) {
-  //   const user = await userModel.findOne({username: req.session.passport.user});
-  //   // user.hash = req.body.hash;
-  //   await user.save();
-  //   res.redirect("profile")
-  //   console.log(user);
-  //   }); 
+
   router.get('/files', isLoggedIn, async function(req, res, next) {
     const user = await 
     userModel.findOne({username: req.session.passport.user})
-
     res.render("files",{user, nav: true})
   });
 router.get('/profile',isLoggedIn, async function(req, res, next) {
@@ -126,5 +121,59 @@ router.post("/signup", function(req,res){
     res.redirect("/");
   }
 
-
+  router.post('/password-reset',isLoggedIn,async function(req, res, next) {
+      const {email} = req.body;
+      if(!email){
+        res.status(401).json({status:401,message:"enter your Email"});
+      }
+      try{
+          const user = await userModel.findOne({email:email});
+          const token = jwt.sign({_id:userfind._id},)
+      }catch(error){
+        console.log(error);
+      }
+    }); 
+    router.post('/test',async function(req, res, next) {
+      const {email} = req.body;
+        try{
+            const transporter = nodemailer.createTransport({
+                    host: "sandbox.smtp.mailtrap.io",
+                    port: 2525,
+                    auth: {
+                      user: process.env.user,
+                      pass: process.env.pass
+                    }
+            });
+            const usermail = ({
+                from: process.env.user,
+                to: email,
+                subject: 'subject',
+                html: '<h1>oppdffvgbhhfkjgyr</h1>'
+            })
+            await transporter.sendMail(usermail,(error,info)=>{
+                if(error){
+                    console.log(("Error"),error);
+                }else{
+                    console.log("email sent" + info.response);
+                    // resizeBy.status(201).json({status:201,info})
+                }
+            })
+            console.log("opppppppppp");
+        } catch (error){
+            // console.log(error, "not sent email");
+            // resizeBy.status(401).json({status:401,error})
+        }
+        const user = await userModel.findOne({username: req.session.passport.user});
+        // user.profileimage = req.file.filename; 
+        user.email = req.body.email;
+ 
+    });
+    router.get('/tests',isLoggedIn,async function(req, res, next) {
+      const user = await 
+      userModel.findOne({username: req.session.passport.user})
+      // .populate('posts')
+      console.log(user.user);
+      res.render("text",{user, nav: true})
+    });
 module.exports = router;
+ 
