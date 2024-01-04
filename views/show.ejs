@@ -1,16 +1,20 @@
 <% include ./partials/header.ejs %>
     <div class="w-[100%] min-h-screen bg-zinc-700 px-10 py-8 text-white">
         <div class="cards flex flex-wrap  gap-10 ">
-            <% user.posts.forEach(function(elem){ %>
-                <div class="card w-38 gap-10 mx-1">
-                    <h2 class="mt-2 text-sm " style="text-align:center;"><%= elem.title %></h2>
-
-                    <div class=" w-full h-44 bg-sky-200 rounded-lg overflow-hidden">
-                        <img src="/images/uploads/<%= elem.image %>" class="w-full h-full object-cover" alt="">
+            <% if(post.length > 0) { %>
+                <% post.map((dt) => { %>
+                  <div class="max-w-sm inline-block rounded overflow-hidden shadow-2xl mt-10">
+                   <a href="/images/uploads/<%=dt.image %>"> <img class="w-full h-[235px]" src="/images/uploads/<%=dt.image %>" alt="<%= dt.postText %>"></a>
+                    <div class="px-6 py-4 flex items-center justify-between gap-8">
+                      <div class="font-bold text-xl mb-2"><%= dt.postText %></div>
+                      <form action="/delete/<%=dt._id %>" method="post">
+                        <button type="submit" class="dlt-btn bg-red-500 p-3 rounded text-white"><i class="fa-solid fa-trash-can fa-lg"></i></button>
+                      </form>
                     </div>
-                    <h5 class="mt-2 text-sm w-72  flex flex-wrap" style="text-align:center;"><%= elem.imageText %></h5>
-                </div>    
-           <% }) %>
+                  </div>
+                <% }) %>
+              <% } else { %> <h1 class="text-3xl ml-[18%]">Upload To See Your Post</h1> <% } %>
+    
         </div>
     </div>
 <% include ./partials/footer.ejs %>

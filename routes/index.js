@@ -9,11 +9,11 @@ const upload = require("./multer")
 const sendEmail = require("./email")
 const jwt = require("jsonwebtoken")
 passport.use(new localStrategy(userModel.authenticate()));
- 
+const {ObjectId} = require('mongodb')
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index',{error: req.flash('error'), nav: false})
-});
+}); 
 
 router.get('/signup', function(req, res, next) {
   res.render('signup',{nav: false})
@@ -43,19 +43,44 @@ router.post('/edit', isLoggedIn,upload.single("image"), async function(req, res,
     userModel.findOne({username: req.session.passport.user})
     res.render("files",{user, nav: true})
   });
-router.get('/profile',isLoggedIn, async function(req, res, next) {
-  const user = await 
-  userModel.findOne({username: req.session.passport.user})
-  .populate('posts')
-  console.log(user.posts.length);
-  res.render("profile",{user, nav: true})
+// router.get('/profile',isLoggedIn, async function(req, res, next) {
+//   const user = await 
+//   userModel.findOne({username: req.session.passport.user})
+//   .populate('posts')
+//   console.log(user.posts.length);
+//   res.render("profile",{user, nav: true})
+// });
+
+router.get('/profile', isLoggedIn , async function(req, res, next) {
+  const {username} = req.user;
+  // console.log(req.session.passport.user)
+  const user = await userModel.findOne({username}).populate('posts');
+  // console.log(user);
+  res.render('profile',{user,username: user.username, fullname: user.fullname, post: user.posts,nav: true});
 });
 
 router.get('/show/posts',isLoggedIn, async function(req, res, next) {
-  const user = await 
-  userModel.findOne({username: req.session.passport.user})
-  .populate('posts')
-  res.render("show",{user, nav: true})
+  // const user = await 
+  // userModel.findOne({username: req.session.passport.user})
+  // .populate('posts')
+  // res.render("show",{user, nav: true})
+
+  const {username} = req.user;
+  const user = await userModel.findOne({username}).populate('posts');
+  res.render('show',{user,username: user.username, fullname: user.fullname, post: user.posts,nav: true});
+});
+
+router.post('/delete/:id',  async function(req,res){
+  const itemId = req.params.id;
+  // console.log('itemId', itemId);
+  const itemObjId = new ObjectId(itemId);
+  // console.log(itemObjId); 
+  const deletedPost = await postModel.deleteOne({_id: itemObjId});
+  const user = await userModel.findByUsername(req.session.passport.user).populate('posts');
+  user.posts = user.posts.filter((dt) => !dt._id.equals(itemObjId));
+  console.log(user);
+  await user.save();
+  res.redirect('/profile');
 });
 
 router.get('/feed',isLoggedIn, async function(req, res, next) {
