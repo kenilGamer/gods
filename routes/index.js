@@ -1,8 +1,8 @@
 // @ts-nocheck
 var express = require('express');
 var router = express.Router();
-const userModel = require("./users")
-const postModel = require("./post");
+const userModel = require("../models/users")
+const postModel = require("../models/post");
 const passport = require('passport');
 const localStrategy = require("passport-local")
 const upload = require("./multer")

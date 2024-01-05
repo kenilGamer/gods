@@ -14,3 +14,16 @@ html , body{
     height: 100%;
     width: 100%;
 }
+
+.dd{
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+::-webkit-scrollbar {
+    width: 0px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f104;
+}
