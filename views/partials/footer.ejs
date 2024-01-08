@@ -1,5 +1,5 @@
 </body>
-<script>
+<script  type="text/javascript" charset="utf-8">
   function dropdown() {
     let nav = document.getElementById("navbar-default");
     let menu = document.getElementById("menu");
@@ -24,7 +24,24 @@
 
   dropdown();
   window.addEventListener('resize', dropdown);
-
 </script>
 
+<script src="/socket.io/socket.io.js.map"></script>
+<!-- <script src="socket-lib/socket.io.js"></script> -->
+<script type="text/javascript" charset="utf-8">
+function sendData() {
+    try {
+        let socket = io.connect('http://localhost:3300');
+        socket.on('connect', function(data) {
+            socket.send('Hello.');
+            socket.on('message', function (msg) {
+                socket.send('This is where I send data?');
+            });
+        });
+    }
+    catch(err) {
+        alert('ERROR: socket.io encountered a problem:\n\n' + err);
+    }
+} 
+</script>
 </html>
