@@ -13,30 +13,6 @@ const passport = require('passport');
 const flash = require("connect-flash")
 var app = express();
 // const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
-
-// const app = express();
-const httpServer = http.createServer(app);
-const io = new Server(httpServer);
-
-// Serve Socket.IO client library
-// app.use("/socket.io", express.static("node_modules/socket.io/client-dist"));
-app.get("/socket.io/socket.io.js.map", (req, res) => {
-  res.sendFile(__dirname + '/node_modules/socket.io/client-dist/socket.io.js.map');
-});
-// Socket.IO setup
-io.on('connection', function(socket) {
-  console.log('A user connected');
-
-  //Whenever someone disconnects this piece of code executed
-  socket.on('disconnect', function () {
-     console.log('A user disconnected');
-  });
-});
- 
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
