@@ -1,6 +1,6 @@
 <% include ./partials/header.ejs %>
     <div class="w-full min-h-screen bg-zinc-700 px-10 py-8 text-white">
-        <div class="cards flex flex-wrap gap-10 ">
+        <div class="cards flex flex-wrap gap-10 bg-neutral-600 w-fit p-10 rounded-md ">
             <% posts.forEach(function(elem){ %>
                 <div class="card w-38 sm:w-52">
                     <h2 class="mt-2 text-sm" style="text-align: center;">@<%= elem.user.username %></h2>

@@ -1,6 +1,11 @@
 const pls = require("passport-local-mongoose")
 const mongoose = require("mongoose")
-mongoose.connect(process.env.mongose)
+mongoose.connect(process.env.mongose).then((result) => {
+  console.log("Mongoose");
+}).catch((err) => {
+  console.log(err);
+});
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
